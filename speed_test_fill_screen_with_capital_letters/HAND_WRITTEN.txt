@@ -1,0 +1,53 @@
+DIM MC% 100
+DIM len 1
+?len = &FF
+FOR opt=1 TO 3 STEP 2
+P% = MC%
+[
+    OPT opt
+    LDA #65
+    LDX #0
+    LDY #0
+    .loop
+    CPY #0
+    BEQ zero
+    CPY #1
+    BEQ one
+    CPY #2
+    BEQ two
+    JMP three
+    .zero
+    STA &7C00,X
+    JMP continue
+    .one
+    STA &7CFF,X
+    JMP continue
+    .two
+    STA &7DFE,X
+    JMP continue
+    .three
+    STA &7EFD,X
+    PHA
+    LDA #&EB
+    STA len
+    PLA
+    .continue
+    CLC
+    ADC #1
+    CMP #91
+    BMI go_on
+    LDA #65
+    .go_on
+    INX
+    CPX len
+    BNE not_inc
+    INY
+    LDX #0
+    .not_inc
+    CPY #4
+    BMI loop
+    RTS
+]
+NEXT
+MODE 7
+CALL MC%

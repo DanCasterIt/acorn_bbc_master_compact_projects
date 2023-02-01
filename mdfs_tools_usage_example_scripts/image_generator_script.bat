@@ -1,0 +1,1 @@
+MkImg.exe demo.adf root -fs adfs demo -r
