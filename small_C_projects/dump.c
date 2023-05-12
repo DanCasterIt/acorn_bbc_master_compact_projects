@@ -9,23 +9,24 @@
 #define JIM_WR 0x95		//0xFD00 to 0xFDFF
 #define SHELA_WR 0x97	//0xFE00 to 0xFEFF
 
+typedef struct manipulate	{
+	uint8_t bit0 : 1;
+	uint8_t bit1 : 1;
+	uint8_t bit2 : 1;
+	uint8_t bit3 : 1;
+	uint8_t bit4 : 1;
+	uint8_t bit5 : 1;
+	uint8_t bit6 : 1;
+	uint8_t bit7 : 1;
+}manipulate_t;
+
+manipulate_t manipulate_v;
+
+// IO() function arguments
 uint8_t page = 0;
 uint8_t page_offset = 0;
 uint8_t in_byte = 0;
 uint8_t out_byte = 0;
-
-typedef struct manipulate	{
-	int bit0 : 1;
-	int bit1 : 1;
-	int bit2 : 1;
-	int bit3 : 1;
-	int bit4 : 1;
-	int bit5 : 1;
-	int bit6 : 1;
-	int bit7 : 1;
-}manipulate_t;
-
-manipulate_t manipulate_v;
 
 void IO(void)	{
 	__asm__ ("LDA %v", page);
@@ -35,15 +36,12 @@ void IO(void)	{
 	__asm__ ("STY %v",out_byte);
 }
 
-void to_bin (void * number, unsigned char num_size, char *string)	{
+void to_bin(void * number, unsigned char num_size, char *string)	{
 	int i, e, f;
 	unsigned char *num;
 	for(f = 0, e = 8 * num_size -1; f < num_size;  f++)	{
-		num = &((unsigned char*)number)[f];
-		for(i = 0; i < 8; i++, e--)	{
-			if(((*num >> i) & 1) == 1)	string[e] = '1';
-			else	string[e] = '0';
-		}
+		num = ((unsigned char *)number + f);
+		for(i = 0; i < 8; i++, e--)	string[e] = ((*num >> i) & 1) ? '1' : '0';
 	}
 	string[8 * num_size] = '\0';
 }

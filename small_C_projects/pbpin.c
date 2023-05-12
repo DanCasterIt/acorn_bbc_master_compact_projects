@@ -12,14 +12,14 @@ uint8_t in_byte = 0;
 uint8_t out_byte = 0;
 
 typedef struct manipulate	{
-	int bit0 : 1;
-	int bit1 : 1;
-	int bit2 : 1;
-	int bit3 : 1;
-	int bit4 : 1;
-	int bit5 : 1;
-	int bit6 : 1;
-	int bit7 : 1;
+	uint8_t bit0 : 1;
+	uint8_t bit1 : 1;
+	uint8_t bit2 : 1;
+	uint8_t bit3 : 1;
+	uint8_t bit4 : 1;
+	uint8_t bit5 : 1;
+	uint8_t bit6 : 1;
+	uint8_t bit7 : 1;
 }manipulate_t;
 
 manipulate_t manipulate_v;
